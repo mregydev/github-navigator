@@ -1,4 +1,3 @@
-
 import { useQuery } from '@tanstack/react-query';
 
 import { useRepoStore } from '../store/repoStore';
@@ -7,18 +6,25 @@ import { Card, CardContent } from '@/components/ui/card';
 
 import { useEffect, useState } from 'react';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Terminal } from 'lucide-react';
-import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
+import { GitFork, Star, Terminal } from 'lucide-react';
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/components/ui/pagination';
 import { fetchRepos } from '@/api/RepoApi';
 import LoadingSpinner from './LoadingSpinner';
 
 const RepoList = () => {
-  const {query,language,sort,toggleBookmark,bookmarks,isBookmarked} = useRepoStore((s) => s);
-  
+  const { query, language, sort, toggleBookmark, bookmarks, isBookmarked } =
+    useRepoStore((s) => s);
+
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    console.log('changed')
+    console.log('changed');
   }, [bookmarks]);
 
   const { data, isLoading, isError } = useQuery({
@@ -30,18 +36,20 @@ const RepoList = () => {
 
   if (isError) {
     return (
-      <Alert variant="destructive" className="my-6">
-        <Terminal className="h-5 w-5" />
+      <Alert variant='destructive' className='my-6'>
+        <Terminal className='h-5 w-5' />
         <AlertTitle>Error</AlertTitle>
-        <AlertDescription>Something went wrong while fetching repositories. Please try again.</AlertDescription>
+        <AlertDescription>
+          Something went wrong while fetching repositories. Please try again.
+        </AlertDescription>
       </Alert>
     );
   }
 
   if (!data || data.length === 0) {
     return (
-      <div className="text-center py-10 text-gray-500">
-        <p className="text-lg">No repositories found for your search.</p>
+      <div className='text-center py-10 text-gray-500'>
+        <p className='text-lg'>No repositories found for your search.</p>
       </div>
     );
   }
@@ -58,9 +66,19 @@ const RepoList = () => {
               >
                 {repo.full_name}
               </Link>
-              <p className='text-sm text-gray-600 mt-1'>{repo.description.substring(0,200)+"..."}</p> 
-              <p className='text-xs text-gray-500 mt-1'>⭐ {repo.stargazers_count} stars</p>
-              <p className='text-xs text-gray-500 mt-1'> {repo.forks_count} forks</p>
+              <p className='text-sm text-gray-600 mt-1'>
+                {repo.description.substring(0, 200) + '...'}
+              </p>
+              <div className='flex gap-4 mt-1 text-xs text-gray-500'>
+                <span className='flex items-center gap-1'>
+                  <Star className='w-3 h-3' />
+                  {repo.stargazers_count}
+                </span>
+                <span className='flex items-center gap-1'>
+                  <GitFork className='w-3 h-3' />
+                  {repo.forks_count}
+                </span>
+              </div>
             </div>
             <button
               onClick={() => toggleBookmark(repo)}
@@ -82,14 +100,10 @@ const RepoList = () => {
           <PaginationItem>
             <PaginationPrevious
               onClick={() => setPage((p) => Math.max(1, p - 1))}
-              
             />
           </PaginationItem>
-          <PaginationItem >
-            <PaginationNext
-              onClick={() => setPage((p) => p + 1)}
-              
-            />
+          <PaginationItem>
+            <PaginationNext onClick={() => setPage((p) => p + 1)} />
           </PaginationItem>
         </PaginationContent>
       </Pagination>

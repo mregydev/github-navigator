@@ -22,8 +22,8 @@ const FilterBar = () => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setSearch(value);         // update input immediately
-    debounced(value);         // debounce update to store
+    setSearch(value);         
+    debounced(value);         
   };
 
   return (
