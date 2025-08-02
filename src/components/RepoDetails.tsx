@@ -4,7 +4,7 @@ import { fetchRepoDetails } from '../api/RepoApi';
 import LoadingSpinner from './LoadingSpinner';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { Terminal } from 'lucide-react';
+import { Code2, Eye, GitFork, Star, Terminal } from 'lucide-react';
 import { Alert, AlertTitle, AlertDescription } from './ui/alert';
 
 const RepoDetails = () => {
@@ -41,17 +41,21 @@ const RepoDetails = () => {
         </CardHeader>
         <CardContent className='space-y-6'>
           <div className='grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm text-gray-600'>
-            <div>
-              <strong>⭐ Stars:</strong> {data.stargazers_count}
+            <div className='flex items-center gap-2'>
+              <Star className='w-4 h-4 text-yellow-500' />
+              <span>{data.stargazers_count} Stars</span>
             </div>
-            <div>
-              <strong>🍴 Forks:</strong> {data.forks_count}
+            <div className='flex items-center gap-2'>
+              <GitFork className='w-4 h-4 text-gray-600' />
+              <span>{data.forks_count} Forks</span>
             </div>
-            <div>
-              <strong>👁 Watchers:</strong> {data.watchers_count}
+            <div className='flex items-center gap-2'>
+              <Eye className='w-4 h-4 text-gray-600' />
+              <span>{data.watchers_count} Watchers</span>
             </div>
-            <div>
-              <strong>📝 Language:</strong> {data.language}
+            <div className='flex items-center gap-2'>
+              <Code2 className='w-4 h-4 text-gray-600' />
+              <span>{data.language}</span>
             </div>
           </div>
 
