@@ -1,37 +1,64 @@
 import { useRepoStore } from '../store/repoStore';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { useDebouncedCallback } from 'use-debounce';
+import { useState } from 'react';
 
 const FilterBar = () => {
-  const query = useRepoStore((s) => s.query);
-  const setQuery = useRepoStore((s) => s.setQuery);
-  const setLanguage = useRepoStore((s) => s.setLanguage);
-  const setSort = useRepoStore((s) => s.setSort);
+  const { query, language, sort, setQuery, setLanguage, setSort } =
+    useRepoStore((s) => s);
+
+  const [search, setSearch] = useState(query);
+
+  const debounced = useDebouncedCallback((value: string) => {
+    setQuery(value);
+  }, 1000);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearch(value);         // update input immediately
+    debounced(value);         // debounce update to store
+  };
 
   return (
-    <div className="mb-4 flex flex-col sm:flex-row gap-2 sm:items-center justify-between bg-white p-4 rounded shadow">
-      <input
-        type="text"
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        className="border border-gray-300 rounded px-3 py-2 w-full sm:w-1/2"
-        placeholder="Search repositories..."
+    <div className='mb-4 flex flex-col sm:flex-row gap-2 sm:items-center justify-between bg-white p-4 rounded shadow'>
+      <Input
+        value={search}
+        onChange={handleInputChange}
+        className='w-full sm:w-1/2'
+        placeholder='Search repositories...'
       />
-      <div className="flex gap-2">
-        <select
-          onChange={(e) => setLanguage(e.target.value)}
-          className="border border-gray-300 rounded px-2 py-1"
+      <div className='flex gap-2'>
+        <Select onValueChange={setLanguage} defaultValue={language}>
+          <SelectTrigger className='w-[160px]'>
+            <SelectValue placeholder='Language' />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value='all'>All Languages</SelectItem>
+            <SelectItem value='javascript'>JavaScript</SelectItem>
+            <SelectItem value='typescript'>TypeScript</SelectItem>
+            <SelectItem value='python'>Python</SelectItem>
+          </SelectContent>
+        </Select>
+
+        <Select
+          onValueChange={(v) => setSort(v as 'stars' | 'forks')}
+          defaultValue={sort}
         >
-          <option value="">All Languages</option>
-          <option value="javascript">JavaScript</option>
-          <option value="typescript">TypeScript</option>
-          <option value="python">Python</option>
-        </select>
-        <select
-          onChange={(e) => setSort(e.target.value as 'stars' | 'forks')}
-          className="border border-gray-300 rounded px-2 py-1"
-        >
-          <option value="stars">Sort by Stars</option>
-          <option value="forks">Sort by Forks</option>
-        </select>
+          <SelectTrigger className='w-[160px]'>
+            <SelectValue placeholder='Sort by' />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value='stars'>Sort by Stars</SelectItem>
+            <SelectItem value='forks'>Sort by Forks</SelectItem>
+          </SelectContent>
+        </Select>
       </div>
     </div>
   );

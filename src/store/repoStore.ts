@@ -10,7 +10,7 @@ interface RepoState {
   sort: 'stars' | 'forks';
 
   // Bookmarks
-  bookmarks: Repository[];
+  bookmarks: { [id: string]: string };
 
   // Setters
   setQuery: (q: string) => void;
@@ -20,17 +20,16 @@ interface RepoState {
   // Bookmark handlers
   toggleBookmark: (repo: Repository) => void;
   isBookmarked: (id: number) => boolean;
-  markBookmarkedRepos: (repos: Repository[]) => Repository[];
 }
 
 export const useRepoStore = create<RepoState>()(
   persist(
     (set, get) => ({
       // Initial state
-      query: 'react',
+      query: '',
       language: '',
       sort: 'stars',
-      bookmarks: [],
+      bookmarks: {},
 
       // Filter setters
       setQuery: (q) => set({ query: q }),
@@ -40,29 +39,19 @@ export const useRepoStore = create<RepoState>()(
       // Bookmark logic
       toggleBookmark: (repo) => {
         const { bookmarks } = get();
-        const exists = bookmarks.some((r) => r.id === repo.id);
-        const updated = exists
-          ? bookmarks.filter((r) => r.id !== repo.id)
-          : [...bookmarks, repo];
-        set({ bookmarks: updated });
+        const isBookmarked=bookmarks[repo.id];
+
+        set({ bookmarks: { ...bookmarks, [repo.id]: !isBookmarked } });
       },
 
       isBookmarked: (id) => {
-        return get().bookmarks.some((r) => r.id === id);
-      },
-
-      markBookmarkedRepos: (repos) => {
-        const { bookmarks } = get();
-        return repos.map((r) => ({
-          ...r,
-          isBookmarked: bookmarks.some((b) => b.id === r.id),
-        }));
+        return !!get().bookmarks[id];
       },
     }),
     {
       name: 'repo-store',
       partialize: (state) => ({
-        bookmarks: state.bookmarks, 
+        bookmarks: state.bookmarks,
       }),
     }
   )

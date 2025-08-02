@@ -11,12 +11,36 @@ const api = axios.create({
   },
 });
 
-export const fetchRepos = async (query: string, page = 1): Promise<Repository[]> => {
-  const res = await api.get('/search/repositories', {
-    params: { q: query, per_page: 10, page },
-  });
-  return res.data.items;
-};
+
+/**
+ * Fetches GitHub repositories with filters.
+ * @param query - The search term
+ * @param language - Optional language filter
+ * @param sort - Sorting by 'stars' or 'forks'
+ * @param page - Pagination page number
+ */
+export const fetchRepos = async (
+    query: string,
+    language: string = '',
+    sort: 'stars' | 'forks' = 'stars',
+    page: number = 1
+  ): Promise<Repository[]> => {
+    const baseQuery = !query.trim() ? 'true' : query;
+    const langPart = language ? `+language:${language}` : '';
+    const q = `${baseQuery}${langPart}`;
+
+    const response = await api.get('/search/repositories', {
+      params: {
+        q,
+        sort,
+        order: 'desc',
+        per_page: 10,
+        page,
+      },
+    });
+
+    return response.data.items;
+  };
 
 export const fetchRepoDetails = async (owner: string, repo: string): Promise<Repository> => {
   const [repoRes, contributorsRes, issuesRes] = await Promise.all([
