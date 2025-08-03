@@ -37,7 +37,7 @@ const RepoList = () => {
 
   return (
     <div className='space-y-4'>
-      {data.map((repo) => (
+      {!!data && data.map((repo) => (
         <RepoListItem repo={repo}></RepoListItem>
       ))}
 

@@ -10,8 +10,6 @@ import {
 
 import { useDebouncedCallback } from 'use-debounce';
 import { useState } from 'react';
-import { toast } from 'sonner';
-import { AlertTriangle } from 'lucide-react';
 
 const FilterBar = () => {
   const { query, language, sort, setQuery, setLanguage, setSort } =
