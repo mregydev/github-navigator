@@ -8,7 +8,7 @@ Repo Navigator is a minimal GitHub repository explorer that allows users to sear
 
 ## 🔍 Features
 
-- 🔎 **Search GitHub Repositories** by query and language
+- 🔎 **Search GitHub Repositories** by query and language and applied debouncing
 - ⭐ **Sort** by stars or forks
 - 📄 **Repository Detail View** at `/repo/:owner/:repo`, e.g., [`/repo/NARKOZ/hacker-scripts`](https://github-navigator-3oy1.vercel.app/repo/NARKOZ/hacker-scripts)
 - 📌 **Bookmark Repositories** with local persistence
