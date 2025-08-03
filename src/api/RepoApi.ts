@@ -4,12 +4,13 @@ import type { Issue } from '../dto/Issue';
 import type { Repository } from '../dto/Repository';
 
 
+
 const api = axios.create({
   baseURL: import.meta.env.VITE_GITHUB_API_BASE_URL,
   headers: {
     Accept: 'application/vnd.github+json',
   },
-});
+})
 
 
 /**

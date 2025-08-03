@@ -10,30 +10,28 @@ import {
   CardDescription,
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { Code2, Eye, GitFork, Star, Terminal } from 'lucide-react';
-import { Alert, AlertTitle, AlertDescription } from '../ui/alert';
+import { Code2, Eye, GitFork, Star } from 'lucide-react';
+
 import Contributors from './Contributors';
 import Issues from './Issues';
+import { Result } from '../ui/result';
 
 const RepoDetails = () => {
   const { owner, name } = useParams<{ owner: string; name: string }>();
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading,isError } = useQuery({
     queryKey: ['repoDetails', owner, name],
     queryFn: () => fetchRepoDetails(owner!, name!),
     enabled: !!owner && !!name,
   });
 
   if (isLoading) return <LoadingSpinner />;
-  if (isError) {
+  if (!data && !isError) {
     return (
-      <Alert variant='destructive' className='my-6'>
-        <Terminal className='h-5 w-5' />
-        <AlertTitle>Error</AlertTitle>
-        <AlertDescription>
-          Something went wrong while fetching repositories. Please try again.
-        </AlertDescription>
-      </Alert>
+      <Result
+        type='warning'
+        message='Respository details doesnot exist'
+      ></Result>
     );
   }
 
@@ -45,7 +43,7 @@ const RepoDetails = () => {
             <img src={data.owner.avatar_url} width={60} />
             {data.full_name}
           </CardTitle>
-          <CardDescription className='text-gray-700 mt-2'>
+          <CardDescription className='text-gray-700 mt-2 break-normal'>
             {data.description}
           </CardDescription>
         </CardHeader>

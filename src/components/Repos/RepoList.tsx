@@ -3,8 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useRepoStore } from '../../store/repoStore';
 
 import { useEffect, useState } from 'react';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { Terminal } from 'lucide-react';
+
 import {
   Pagination,
   PaginationContent,
@@ -15,10 +14,10 @@ import {
 import { fetchRepos } from '@/api/RepoApi';
 import LoadingSpinner from '../LoadingSpinner';
 import RepoListItem from './RepoListItem';
+import { Result } from '../ui/result';
 
 const RepoList = () => {
-  const { query, language, sort, bookmarks } =
-    useRepoStore((s) => s);
+  const { query, language, sort, bookmarks } = useRepoStore((s) => s);
 
   const [page, setPage] = useState(1);
 
@@ -32,25 +31,8 @@ const RepoList = () => {
   });
 
   if (isLoading) return <LoadingSpinner />;
-
-  if (isError) {
-    return (
-      <Alert variant='destructive' className='my-6'>
-        <Terminal className='h-5 w-5' />
-        <AlertTitle>Error</AlertTitle>
-        <AlertDescription>
-          Something went wrong while fetching repositories. Please try again.
-        </AlertDescription>
-      </Alert>
-    );
-  }
-
-  if (!data || data.length === 0) {
-    return (
-      <div className='text-center py-10 text-gray-500'>
-        <p className='text-lg'>No repositories found for your search.</p>
-      </div>
-    );
+  if (!isError && (!data || !data.length)) {
+    return <Result type='warning' message='No repositores found'></Result>;
   }
 
   return (
