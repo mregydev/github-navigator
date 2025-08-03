@@ -28,7 +28,7 @@ const RepoListItem = ({ repo }: RepoListItemProps) => {
             </span>
           </Link>
           <p className='text-sm text-gray-600 mt-1'>
-            {repo.description.substring(0, 200) + '...'}
+            {repo.description?.substring(0, 200) + '...'}
           </p>
           <div className='flex gap-4 mt-1 text-xs text-gray-500'>
             <span className='flex items-center gap-1'>
