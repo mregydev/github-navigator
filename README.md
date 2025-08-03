@@ -2,7 +2,7 @@
 
 [Live Demo](https://github-navigator-3oy1.vercel.app/)
 
-Repo Navigator is a minimal GitHub repository explorer that allows users to search, sort, and view details about GitHub repositories — with a strong focus on performance, global state management, and robust error handling.
+Repo Navigator is a minimal responsive GitHub repository explorer that allows users to search, sort, and view details about GitHub repositories — with a strong focus on performance, global state management, and robust error handling.
 
 ---
 
