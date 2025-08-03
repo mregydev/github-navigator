@@ -1,69 +1,70 @@
-# React + TypeScript + Vite
+# 🚀 Repo Navigator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[Live Demo](https://github-navigator-3oy1.vercel.app/)
 
-Currently, two official plugins are available:
+Repo Navigator is a minimal GitHub repository explorer that allows users to search, sort, and view details about GitHub repositories — with a strong focus on performance, global state management, and robust error handling.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🔍 Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 🔎 **Search GitHub Repositories** by query and language
+- ⭐ **Sort** by stars or forks
+- 📄 **Repository Detail View** at `/repo/:owner/:repo`, e.g., [`/repo/NARKOZ/hacker-scripts`](https://github-navigator-3oy1.vercel.app/repo/NARKOZ/hacker-scripts)
+- 📌 **Bookmark Repositories** with local persistence
+- ⚙️ **Centralized Error Handling** using `react-query` + `toast`
+- 💨 **Blazing-fast retrieval** of bookmarked repos with `O(1)` lookup via object 
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 🧱 Tech Stack
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+| Tool        | Purpose                          |
+|-------------|----------------------------------|
+| **React Query** | Server state & caching with error tracking |
+| **Zustand**     | Global state management with persistence for bookmarks |
+| **shadcn/ui**   | Accessible, styled component library |
+| **Axios**       | API requests to GitHub |
+| **Sonner**      | Toast notifications |
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🧠 Architecture Highlights
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 🔁 Server State with React Query
+
+- Centralized API logic in `queryClient` using `onError` to catch and toast API errors.
+- GitHub rate limits and network errors are automatically handled with custom UI feedback.
+
+### 🧠 Global State with Zustand
+
+- Lightweight, persistent global state for bookmarked repositories.
+- Uses an `object` as a hash map for **O(1)** retrieval and duplication checks.
+
+---
+
+## 📌 Bookmarks
+
+Bookmarked repositories are saved locally (persisted using Zustand middleware), making it easy to store and retrieve without performance issues.
+
+---
+
+## 🧪 TODOs
+
+### 🛠 Improvements
+
+- [ ] Add `ErrorBoundary` for static/render-time error handling
+- [ ] Add component-level tests with **Vitest** or **Jest** and **Testing Library**
+
+---
+
+## 🖥 Deployment
+
+Deployed on **Vercel** at  
+🌍 **[https://github-navigator-3oy1.vercel.app](https://github-navigator-3oy1.vercel.app)**
+
+---
+
+## 📜 License
+
+MIT
