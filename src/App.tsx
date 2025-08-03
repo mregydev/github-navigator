@@ -1,8 +1,8 @@
 import './App.css';
 
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
-import RepoList from './components/RepoList';
-import RepoDetails from './components/RepoDetails';
+import RepoList from './components/RepoList/RepoList';
+import RepoDetails from './components/Details/RepoDetails';
 import FilterBar from './components/FilterBar';
 
 function App() {
