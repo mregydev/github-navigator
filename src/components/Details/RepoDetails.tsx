@@ -18,7 +18,7 @@ import Issues from './Issues';
 const RepoDetails = () => {
   const { owner, name } = useParams<{ owner: string; name: string }>();
 
-  const { data, isLoading, isError, error } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: ['repoDetails', owner, name],
     queryFn: () => fetchRepoDetails(owner!, name!),
     enabled: !!owner && !!name,
