@@ -64,7 +64,3 @@ Deployed on **Vercel** at
 🌍 **[https://github-navigator-3oy1.vercel.app](https://github-navigator-3oy1.vercel.app)**
 
 ---
-
-## 📜 License
-
-MIT
