@@ -27,7 +27,8 @@ export const fetchRepos = async (
     page: number = 1
   ): Promise<Repository[]> => {
     const baseQuery = !query.trim() ? 'true' : query;
-    const langPart = language ? `+language:${language}` : '';
+    const langPart =
+      language && language !== 'all' ? `+language:${language}` : '';
     const q = `${baseQuery}${langPart}`;
 
     const response = await api.get('/search/repositories', {
