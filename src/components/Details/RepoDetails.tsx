@@ -19,14 +19,14 @@ import { Result } from '../ui/result';
 const RepoDetails = () => {
   const { owner, name } = useParams<{ owner: string; name: string }>();
 
-  const { data, isLoading,isError } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['repoDetails', owner, name],
     queryFn: () => fetchRepoDetails(owner!, name!),
     enabled: !!owner && !!name,
   });
 
   if (isLoading) return <LoadingSpinner />;
-  if (!data && !isError) {
+  if (!data) {
     return (
       <Result
         type='warning'

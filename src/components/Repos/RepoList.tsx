@@ -25,13 +25,13 @@ const RepoList = () => {
     console.log('changed');
   }, [bookmarks]);
 
-  const { data, isLoading, isError } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ['repos', query, language, sort, page],
     queryFn: () => fetchRepos(query, language, sort, page),
   });
 
   if (isLoading) return <LoadingSpinner />;
-  if (!isError && (!data || !data.length)) {
+  if ((!data || !data.length)) {
     return <Result type='warning' message='No repositores found'></Result>;
   }
 
