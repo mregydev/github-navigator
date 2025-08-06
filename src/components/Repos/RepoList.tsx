@@ -32,7 +32,7 @@ const RepoList = () => {
 
   if (isLoading) return <LoadingSpinner />;
   if ((!data || !data.length)) {
-    return <Result type='warning' message='No repositores found'></Result>;
+    return <Result message='No repositores found'></Result>;
   }
 
   return (

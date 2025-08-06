@@ -27,12 +27,7 @@ const RepoDetails = () => {
 
   if (isLoading) return <LoadingSpinner />;
   if (!data) {
-    return (
-      <Result
-        type='warning'
-        message='Respository details doesnot exist'
-      ></Result>
-    );
+    return <Result message='Respository details doesnot exist'></Result>;
   }
 
   return (
