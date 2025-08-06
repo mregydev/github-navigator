@@ -12,7 +12,7 @@ import {
   PaginationPrevious,
 } from '@/components/ui/pagination';
 import { fetchRepos } from '@/api/RepoApi';
-import LoadingSpinner from '../LoadingSpinner';
+import LoadingSpinner from '../ui/spinner';
 import RepoListItem from './RepoListItem';
 import { Result } from '../ui/result';
 

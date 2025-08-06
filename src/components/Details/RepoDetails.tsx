@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchRepoDetails } from '../../api/RepoApi';
-import LoadingSpinner from '../LoadingSpinner';
+import LoadingSpinner from '../ui/spinner';
 import {
   Card,
   CardContent,
